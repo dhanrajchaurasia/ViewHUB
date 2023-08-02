@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block title %}
+ViewHUB | Stream
+{% endblock %}
+{% load static %}
+{% block style %}
+  .main-content{
+    position : absolute;
+    width:39%;
+    top:29%;
+    text-align : center;
+    left: 31%;
+  }
+  .cyan{
+    background-image: linear-gradient(60deg, #25aae1, #30dd8a);     
+  }
+
+  .input {
+    background-color: rgb(34 44 64 / var(--tw-bg-opacity));
+    border: 0;
+    font-size: 15px;
+    padding: 15px;
+    color : white;
+    transition: width 0.3s ease;
+    border-radius: 5px;
+  }
+  .input:touch #abc:touch{
+    outline: none;
+  }
+  .enterRoom{
+    display:flex;
+    justify-content: center;
+  }
+  .ff1, .ff2{
+    margin: 5px;
+  }
+  .ff1 {
+    flex: 0.5;
+    height: 40px;
+  }
+  .ff2 {
+    flex: 0.2;
+  }
+  #abc{
+    color: white;
+    cursor: pointer;
+  }
+  .form-control:focus{
+    background-color: rgb(34 44 64 / var(--tw-bg-opacity));
+    color: white;
+  }
+{% endblock style %}
+{% block content %}
+<div class="main-content">
+  <div class="cont">
+    {% if user.is_authenticated %}
+    <h1 class="mb-5">Get started with video Streaming!</h1>
+    <a type="button" class="mb-3 btn cyan" id="meet">Create Room</a>
+    <p id="abc" data-toggle="tooltip" data-placement="top" title="Click to Copy"></p>
+    <div class="justify-content-center">
+      <form method="post">
+        {% csrf_token %}
+        <div class="enterRoom">
+          <input type="text" class="form-control input ff1" name="room" id="room" placeholder="Enter Room ID">
+          <button type="submit" class="btn cyan mb-3 ff2">Submit</button>
+        </div>
+      </form>
+    {% else %}
+      You're not logged in!
+    {% endif %}
+    </div>
+  </div>
+    
+</div>
+<script>
+  const but = document.getElementById("meet");
+  const text = document.getElementById("abc");
+  function generateRandomString(length) {
+    var characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    var randomString = '';
+    for (var i = 0; i < length; i++) {
+      randomString += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return randomString;
+  }
+  but.onclick = () => {
+    text.innerHTML = '';
+    const p = generateRandomString(8);
+    text.innerHTML += p;
+  }
+  text.onclick = () => {
+      const textToCopy = text.innerHTML;
+      const tempTextArea = document.createElement('textarea');
+      tempTextArea.value = textToCopy;
+      document.body.appendChild(tempTextArea);
+      tempTextArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempTextArea);
+  }
+</script>
+{% endblock  %}

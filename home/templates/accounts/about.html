@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}
+{% load static %}
+ViewHUB | About Us
+{% endblock %}
+{% block style %}
+.card{
+    margin:10px;
+    flex: 0.5;
+    
+    background-color: rgb(34 44 64 / var(--tw-bg-opacity));
+}
+.container{
+  display: flex;
+}
+.card-link {
+  color: white;
+  background-image: linear-gradient(60deg, #25aae1, #30dd8a);   
+}
+.card-text {
+  height: 80px;
+}
+{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">Dhanraj Chaurasia</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Final Year ECE @NIT-Allahabad</h6>
+      <p class="card-text">Competitive Programmer | Backend Developer (Django + Golang) | React Native Frontend Developer</p>
+      <a href="https://github.com/dhanrajchaurasia" class="btn card-link">Github</a>
+      <a href="https://linkein.com/in/dhanraj-chaurasia" class="btn card-link">Linkedin</a>
+    </div>
+  </div>
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">Krishna Soni</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Final Year ECE @NIT-Allahabad</h6>
+      <p class="card-text">Competitive Programmer | Backend Developer (Django)</p>
+      <a href="https://github.com/krishna1922" class="btn card-link">Github</a>
+      <a href="https://linkein.com/in/krishna1922" class="btn card-link">Linkedin</a>
+    </div>
+  </div>
+  <br>
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">Ashutosh Suthar</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Final Year ECE @NIT-Allahabad</h6>
+      <p class="card-text">Competitive Programmer | Backend Developer (Django)</p>
+      <a href="https://github.com/ashutoshsuthar2020" class="btn card-link">Github</a>
+      <a href="https://linkein.com/in/ashutoshsuthar" class="btn card-link">Linkedin</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block javascript %}
+document.getElementById("iabout").classList.add("disabled");
+document.getElementById("iabout").classList.remove("active");
+{% endblock %}

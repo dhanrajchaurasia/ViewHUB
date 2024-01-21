@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "builds": [{
         "src": "ViewHub/wsgi.py",
         "use": "@vercel/python",
@@ -8,6 +9,12 @@
         {
             "src": "/(.*)",
             "dest": "ViewHub/wsgi.py"
+        }
+    ],
+    "rewrites": [
+        { 
+            "source": "/(.*)", 
+            "destination": "/" 
         }
     ]
 }

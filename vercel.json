@@ -1,0 +1,13 @@
+{
+    "builds": [{
+        "src": "ViewHub/wsgi.py",
+        "use": "@vercel/python",
+        "config": { "maxLambdaSize": "100mb", "runtime": "python3.8.10" }
+    }],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "ViewHub/wsgi.py"
+        }
+    ]
+}

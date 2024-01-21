@@ -15,6 +15,16 @@ ViewHUB | Stream
     background-image: linear-gradient(60deg, #25aae1, #30dd8a);     
   }
 
+  .red{
+    background-image: linear-gradient(60deg, #e53935, #d32f2f);
+    color:white;   
+    display: none;
+    width: 150px;
+    text-align: center;
+    justify-content: center;
+    margin: auto;
+  }
+
   .input {
     background-color: rgb(34 44 64 / var(--tw-bg-opacity));
     border: 0;
@@ -49,13 +59,17 @@ ViewHUB | Stream
     background-color: rgb(34 44 64 / var(--tw-bg-opacity));
     color: white;
   }
+  #stream{
+    width: 60px;
+  }
 {% endblock style %}
 {% block content %}
 <div class="main-content">
   <div class="cont">
     {% if user.is_authenticated %}
-    <h1 class="mb-5">Get started with video Streaming!</h1>
-    <a type="button" class="mb-3 btn cyan" id="meet">Create Room</a>
+    <h1 class="mb-5">Get started with<br> video Streaming! <img id="stream" src="{% static 'img/stream.png' %}"/></h1>
+    <a type="button" class="mb-3 btn cyan" id="meet" title="Create the room">Create Room</a>
+    <a type="button" class="mb-3 btn red" id="join" title="Join the room directly">Join Room</a>
     <p id="abc" data-toggle="tooltip" data-placement="top" title="Click to Copy"></p>
     <div class="justify-content-center">
       <form method="post">
@@ -73,6 +87,7 @@ ViewHUB | Stream
     
 </div>
 <script>
+  let roomCreated = false;
   const but = document.getElementById("meet");
   const text = document.getElementById("abc");
   function generateRandomString(length) {
@@ -87,6 +102,8 @@ ViewHUB | Stream
     text.innerHTML = '';
     const p = generateRandomString(8);
     text.innerHTML += p;
+    var btn = document.getElementById('join');
+    btn.style.display = 'inherit', btn.href = '/stream/' + p + '/created';
   }
   text.onclick = () => {
       const textToCopy = text.innerHTML;

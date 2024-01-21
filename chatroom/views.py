@@ -17,5 +17,4 @@ def index(request):
     return render(request, 'index.html')
 
 def stream(request, room_name, created):
-    print(room_name)
     return render(request, 'stream.html', {'room' : room_name, 'created':created})

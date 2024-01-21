@@ -12,7 +12,6 @@ class StreamConsumer(AsyncJsonWebsocketConsumer):
 
     async def receive(self, text_data):
         content = json.loads(text_data)
-        print(content)
         print('mssg recieved from client',content['command'])
 
         if(content['command'] == 'join_room'):
@@ -39,7 +38,8 @@ class StreamConsumer(AsyncJsonWebsocketConsumer):
         elif(content['command'] == 'send_msg'):
             await self.channel_layer.group_send(content['room'],{
                 'type':'sendMsg.message',
-                'msg':content['text']
+                'msg':content['text'],
+                'sender': content['sender']
             })
 
         elif(content['command'] == 'candidate'):
@@ -74,9 +74,11 @@ class StreamConsumer(AsyncJsonWebsocketConsumer):
         })
 
     async def sendMsg_message(self, event):
+        print(event)
         await self.send(json.dumps({
             'command':'send_msg',
             'text':event['msg'],
+            'sender':event['sender'],
         }))
                               
     

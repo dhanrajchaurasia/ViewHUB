@@ -27,7 +27,6 @@ def home(request):
         suploads = []
         for p in uploads:
             new_p = p
-            print(p.private, p.Title)
             if p.private and p.upload_author != request.user:
                 pass 
             if isFav(request.user, p.postId):
@@ -45,7 +44,6 @@ def home(request):
             'filter': data
         }
     
-    print(data)
     return render(request, 'home.html', context)
 
 def Post(request, pId):

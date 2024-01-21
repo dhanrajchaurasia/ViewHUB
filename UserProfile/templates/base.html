@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-OL3nOwqbkcd1S8adFU6uPFJdEJf/hTnAR03a9nSTTnX89hsMCLo1xRxVd6qZyRMk" crossorigin="anonymous">
-
+    <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.png' %}">
 
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/9a58c5dfe3.js" crossorigin="anonymous"></script>
@@ -30,8 +30,7 @@
           padding:5px;
           font-size:15px;
           font-weight:20px;
-          text-align:center;
-          
+          text-align:center;          
       }
       .fa-heart{
         color:#ff007b;
@@ -104,6 +103,16 @@
         box-shadow: none;
         border-bottom: 2px solid white;
     }
+    .dropdown-menu, .dropdown-item{
+      background-color: rgb(34 44 64 / var(--tw-bg-opacity));
+    }
+    .dropdown-item{
+      color: white;
+    }
+    .logoutRed:hover{
+      background-color: red;
+      color: white;
+    }
         {% block style %}
           
         {% endblock %}
@@ -136,17 +145,17 @@
               </li>
             </ul>
             {% block search-bar %}
-            
+
             {% endblock search-bar %}
             {% if user.is_authenticated %}
-            <a href="{% url 'stream' %}" style="text-decoration: none;font-size:2rem !important;" title="Screen Streamming"><i class="fas fa-tv fs-2 yellow"></i>&nbsp;</a>
-            <a href="{% url 'create' %}" style="text-decoration: none;" title="Upload Files"><i class="fa-solid fa-square-plus fs-2"></i></a>
+            <a href="{% url 'stream' %}" style="text-decoration: none;" title="Screen Streamming"><img src="{% static 'img/stream.png' %}" height="35px">&nbsp;</a>
+            <a href="{% url 'create' %}" style="text-decoration: none;" title="Upload Files"><img src="{% static 'img/upload.png' %}" height="45px">&nbsp;</a>
             <div class="nav-link">
               <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                 <ul class="navbar-nav">
-                  <li class="nav-item dropdown" title="{{request.user}}">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      {{request.user}} <img src="{% static 'img/profile.png' %}" alt="" class="image">
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" style="color: white; font-size: 20px;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"  title="{{request.user}}">
+                      {{request.user}} <img src="{% static 'img/profile.png' %}" style="height: 40px; width: 40px;" class="image">
                     </a>
                     <ul class="dropdown-menu">
                       <li><a class="dropdown-item" href="{% url 'profile' %}">Dashboard</a></li>
@@ -154,7 +163,7 @@
                       <li><a class="dropdown-item" href="{% url 'favorites' %}">My Favorites</a></li>
                       <li><a class="dropdown-item" href="{% url 'settings' %}">Settings</a></li>
                       <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item"  href="{% url 'logout' %}">Log Out</a></li>
+                      <li><a class="dropdown-item logoutRed"  href="{% url 'logout' %}">Log Out</a></li>
                     </ul>
                   </div>
                 {% else %}
@@ -185,13 +194,11 @@
         const toasts = document.getElementById('toasts')
         createNotification()
         function createNotification() {
-          
-          setTimeout(() => {
-              toasts.remove()
-          }, 3000)
-      }
-      
-      {% endblock %}
+            setTimeout(() => {
+                toasts.remove()
+            }, 3000)
+        }
+        {% endblock %}
         </script>
     </body>
     </html>

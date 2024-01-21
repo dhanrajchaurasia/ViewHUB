@@ -16,8 +16,8 @@ ViewHUB | Stream
         }
 
         .item-2 {
-            display: none;
-            width: 42rem;
+            width: 61rem;
+            margin-left: 3rem;
         }
 
         .item-3 {
@@ -66,6 +66,14 @@ ViewHUB | Stream
             background-color: rgb(34 44 64 / var(--tw-bg-opacity));
             color: white;
           }
+          .msgBox{
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            pointer-events: none;
+          }
 {% endblock %}
 {% block content %}
         <div class="d-flex justify-content-between">
@@ -87,7 +95,7 @@ ViewHUB | Stream
                 </div>
             </div>
             <div class="item-3 d-flex flex-column" id="item3">
-                <textarea readonly name="" id="show-text" cols="30" rows="10" class="form-control input" disabled>Your chat goes here!</textarea><br>
+                <textarea readonly name="" id="show-text" cols="30" rows="10" class="form-control input msgbox" placeholder="Your chat goes here!"></textarea><br>
                 <div class="d-flex con">
                     <input  type="text" id="input-text" class="form-control input">
                 <input type="submit" value="send" id="send-msg" class="btn cyan">
@@ -114,10 +122,6 @@ ViewHUB | Stream
 
         const create = '{{created}}'
         const room = '{{room}}'
-
-        console.log(create)
-        console.log(room)
-
         const our_video = document.getElementById("ours")
         const remote_video = document.getElementById("remote")
 
@@ -139,9 +143,7 @@ ViewHUB | Stream
             }))
             if (create == 'created') {
                 isCreated = true
-                console.log(isCreated)
                 start.style.display = "block";
-                console.log("creater you are")
             } else {
                 isCreated = false
                 console.log(isCreated)
@@ -153,7 +155,6 @@ ViewHUB | Stream
 
 
         }
-        console.log(isCreated)
         if (create == 'created') {
             item1.style.display = "block";
 
@@ -164,8 +165,7 @@ ViewHUB | Stream
             console.log('local stream recieved');
             localStream = stream;
             our_video.srcObject = stream;
-
-
+            console.log(stream)
         }
         start.addEventListener("click", function (e) {
             navigator.mediaDevices.getDisplayMedia({
@@ -190,7 +190,6 @@ ViewHUB | Stream
             } else if (event['command'] == 'answer') {
                 if (isCreated) {
                     rtcpeerconnection.setRemoteDescription(event['answer']);
-                    console.log("answer set as remote");
                 }
             } else if (event['command'] == 'candidate') {
                 if (event['iscreated'] != isCreated) {
@@ -198,7 +197,12 @@ ViewHUB | Stream
                     rtcpeerconnection.addIceCandidate(IceCandidate);
                 }
             }else if(event['command'] == 'send_msg'){
-                document.querySelector('#show-text').value += (event.text + '\n')
+                console.log(event, isCreated);
+                if (event.sender == isCreated){
+                    document.querySelector('#show-text').value += "You: " + (event.text + '\n')
+                }else{
+                    document.querySelector('#show-text').value += "Friend: " + (event.text + '\n')
+                }                
             }
 
 
@@ -286,6 +290,7 @@ ViewHUB | Stream
                 'command':'send_msg',
                 'room':room,
                 'text':message,
+                'sender':isCreated,
             }))
             msgdom.value = ''
         }
